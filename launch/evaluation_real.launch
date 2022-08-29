@@ -1,0 +1,18 @@
+<launch>
+
+    <node pkg="rqt_console" type="rqt_console" name="rqt_console"/>
+
+    <include file="$(find panda_moveit_config)/launch/panda_control_moveit_rviz.launch">
+        <arg name="launch_rviz" value="true"/>
+        <arg name="robot_ip" value="172.16.0.2"/>
+        <arg name="load_gripper" value="true"/>
+    </include>
+
+    <include file="$(find realsense2_camera)/launch/rs_camera.launch"/>
+
+    <node pkg="panda_deep_grasping" name="environment_real" type="environment_real" respawn="true"/>
+    <node pkg="panda_deep_grasping" name="agent_main" type="agent_main.py" args="evaluation_real" />
+    <node pkg="panda_deep_grasping" name="agent_model" type="agent_model.py" respawn="true"/>
+
+
+</launch>

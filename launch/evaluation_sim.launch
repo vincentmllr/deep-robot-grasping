@@ -1,0 +1,16 @@
+<launch>
+  
+  <node pkg="rqt_console" type="rqt_console" name="rqt_console"/>
+
+  <include file="$(find panda_moveit_config)/launch/demo_gazebo.launch" /> 
+
+  <node name="spawn_tabletop" pkg="gazebo_ros" type="spawn_model" args="-file $(find panda_deep_grasping)/description/tabletop/model.sdf -sdf -model tabletop -x 0.5" />
+  <node name="spawn_cube" pkg="gazebo_ros" type="spawn_model" args="-file $(find panda_deep_grasping)/description/cube/model.sdf -sdf -model cube -x 0.5 -z 0.1"/>
+
+  <node pkg="panda_deep_grasping" name="agent_buffer" type="agent_buffer" respawn="true"/>
+  <node pkg="panda_deep_grasping" name="environment_sim" type="environment_sim" respawn="true"/>
+  <node pkg="panda_deep_grasping" name="agent_main" type="agent_main.py" args="evaluation_sim" />
+  <node pkg="panda_deep_grasping" name="agent_model" type="agent_model.py" respawn="true" />
+
+
+</launch>
